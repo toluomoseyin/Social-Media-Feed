@@ -22,13 +22,13 @@ namespace SocialMediaApp.Infrastructure.Services
                 return (BaseResponse<string>.Failure("User already follows"), 400);
             }
 
-            var rowAffected = await _followRepository.Add(new Model.Entities.Follower
+            var rowAffected = await _followRepository.Add(new Model.Entities.Follow
             {
                 FolloweeUserId = followDTO.FolloweeUserId,
                 FollowerUserId = userId,
             });
 
-            if (rowAffected > 1)
+            if (rowAffected > 0)
             {
                 return (BaseResponse<string>.Success("Successfully followed user"), 200);
 

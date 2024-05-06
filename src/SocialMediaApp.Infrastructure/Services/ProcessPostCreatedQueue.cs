@@ -38,16 +38,16 @@ namespace SocialMediaApp.Infrastructure.Services
 
                     var postMoreDetails = await _postRepository.GetPost(post.Id);
 
-                    if(post is not null)
+                    if(postMoreDetails is not null)
                     {
                         var feed = JsonConvert.DeserializeObject<List<FeedResponse>>(cachedValue);
 
                         feed.Add(postMoreDetails);
 
                         await _redisRepository.SetValueAsync($"{Cache.USER_FEED}{follower.FolloweeUserId}", JsonConvert.SerializeObject(feed));
-                    }
 
-                   
+                        return;
+                    }
 
                 }
                 var userFeedDb = await _feedRepository.GetUserFeed(follower.FolloweeUserId, 1, 2000);

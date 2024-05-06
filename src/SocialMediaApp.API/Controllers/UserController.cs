@@ -16,7 +16,7 @@ namespace SocialMediaApp.API.Controllers
         }
 
 
-        [HttpPost("Create")]
+        [HttpPost()]
         public async Task<IActionResult> CreateUser(AddUserDTO addUserDTO)
         {
             var (result, statuscode) = await _userService.CreateUser(addUserDTO);

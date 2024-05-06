@@ -15,24 +15,24 @@ namespace SocialMediaApp.Infrastructure.Persistence.Repository
         }
 
 
-        public async Task<int> Add(Follower follower)
+        public async Task<int> Add(Follow follower)
         {
-            await _appDbContext.Followers.AddAsync(follower);
+            await _appDbContext.Follows.AddAsync(follower);
 
             return await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task<Follower> GetByUserID(int followeeUserId,int followerUserId)
+        public async Task<Follow> GetByUserID(int followeeUserId,int followerUserId)
         {
-            return await _appDbContext.Followers.FirstOrDefaultAsync(x => x.FollowerUserId == followerUserId && x.FolloweeUserId == followeeUserId);
+            return await _appDbContext.Follows.FirstOrDefaultAsync(x => x.FollowerUserId == followerUserId && x.FolloweeUserId == followeeUserId);
 
            
         }
 
 
-        public async Task<List<Follower>> GetUserFollowers(int userId)
+        public async Task<List<Follow>> GetUserFollowers(int userId)
         {
-            return await _appDbContext.Followers.Where(x => x.FolloweeUserId == userId).ToListAsync();
+            return await _appDbContext.Follows.Where(x => x.FolloweeUserId == userId).ToListAsync();
 
 
         }

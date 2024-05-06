@@ -25,8 +25,8 @@ namespace SocialMediaApp.Infrastructure.Services
             {
                 Content = addPostDTO.Content,
                 UserId = userId,
-                CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
             await _postRepository.Add(newPost);
 

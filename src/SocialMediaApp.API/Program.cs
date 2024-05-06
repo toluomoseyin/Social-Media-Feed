@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using SocialMediaApp.Application.Interfaces.Repositories;
 using SocialMediaApp.Application.Interfaces.Services;
 using SocialMediaApp.Application.Messaging;
+using SocialMediaApp.Infrastructure.Middlewares;
 using SocialMediaApp.Infrastructure.Persistence.Context;
 using SocialMediaApp.Infrastructure.Persistence.Repository;
 using SocialMediaApp.Infrastructure.Services;
@@ -39,6 +40,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFeedService, FeedService>();
 builder.Services.AddScoped<ISQSQueue, SQSQueue>();
 builder.Services.AddScoped<IRedisRepository, RedisRepository>();
+
+builder.Services.AddScoped<ILikeRepository, LikeRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ILikeService, LikeService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -87,12 +93,10 @@ builder.Services.AddSwaggerGen(opt =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

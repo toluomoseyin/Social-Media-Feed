@@ -4,9 +4,9 @@ namespace SocialMediaApp.Application.Interfaces.Repositories
 {
     public interface IFollowRepository
     {
-        Task<Follower> GetByUserID(int followeeUserId, int followerUserId);
-        Task<int> Add(Follower follower);
+        Task<Follow> GetByUserID(int followeeUserId, int followerUserId);
+        Task<int> Add(Follow follower);
 
-        Task<List<Follower>> GetUserFollowers(int userId);
+        Task<List<Follow>> GetUserFollowers(int userId);
     }
 }

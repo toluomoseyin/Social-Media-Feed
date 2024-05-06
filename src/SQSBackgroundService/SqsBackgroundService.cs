@@ -94,8 +94,6 @@ namespace SQSBackgroundService
 
         private IAmazonSQS CreateClient()
         {
-            //This is a simple scenario, you might want to use DI instead. Please refere to documentation for options
-
             var accessKey = _configuration.GetValue<string>("AccessKey");
             var secretKey = _configuration.GetValue<string>("SecretKey");
             var region = RegionEndpoint.USEast1;
@@ -118,7 +116,6 @@ namespace SQSBackgroundService
             }
             catch (QueueDoesNotExistException)
             {
-                //You might want to add additionale exception handling here because that may fail
                 var response = await client.CreateQueueAsync(new CreateQueueRequest
                 {
                     QueueName = queueName

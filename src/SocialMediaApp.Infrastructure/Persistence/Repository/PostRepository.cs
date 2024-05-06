@@ -37,8 +37,8 @@ namespace SocialMediaApp.Infrastructure.Persistence.Repository
                FirstName = user.FirstName,
                LastName = user.LastName,
                Username = user.Username,
-               CreatedDate = post.CreatedDate,
-               UpdatedDate = post.UpdatedDate
+               CreatedDate = post.CreatedAt,
+               UpdatedDate = post.UpdatedAt
 
            }).FirstOrDefaultAsync();
 

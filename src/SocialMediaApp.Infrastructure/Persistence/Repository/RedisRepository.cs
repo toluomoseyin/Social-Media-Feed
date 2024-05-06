@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SocialMediaApp.Infrastructure.Persistence.Repository
+﻿namespace SocialMediaApp.Infrastructure.Persistence.Repository
 {
     using SocialMediaApp.Application.Interfaces.Repositories;
     using StackExchange.Redis;

@@ -1,6 +1,6 @@
 ﻿namespace SocialMediaApp.Model.Entities
 {
-    public class Follower
+    public class Follow
     {
         public int Id { get; set; }
         public int FolloweeUserId { get; set; }
