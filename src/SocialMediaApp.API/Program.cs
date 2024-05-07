@@ -40,6 +40,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFeedService, FeedService>();
 builder.Services.AddScoped<ISQSQueue, SQSQueue>();
 builder.Services.AddScoped<IRedisRepository, RedisRepository>();
+builder.Services.AddScoped<IUtilities, Utilities>();
 
 builder.Services.AddScoped<ILikeRepository, LikeRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();

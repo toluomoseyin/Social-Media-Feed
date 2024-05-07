@@ -3,13 +3,14 @@
 # Feed Architectural Diagram
 
 
-![alt text](image.png)
+![alt text](image-1.png)
 
 
 Tools used
 
 - Amazon SQS
-- Distributed cache
+- Distributed cache (Redis)
 - EntityFrameworkCore
-- SQL Server
-- 
+- Amazon RDS (SQL Server)
+- Docker
+- Amazon EC2

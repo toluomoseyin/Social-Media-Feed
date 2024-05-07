@@ -14,11 +14,13 @@ namespace SocialMediaApp.Infrastructure.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _config;
+        private readonly IUtilities _utilities;
 
-        public UserService(IUserRepository userRepository, IConfiguration config)
+        public UserService(IUserRepository userRepository, IConfiguration config, IUtilities utilities)
         {
             _userRepository = userRepository;
             _config = config;
+            _utilities = utilities;
         }
 
         public async Task<(BaseResponse<string>,int)> CreateUser(AddUserDTO addUserDTO)
@@ -35,7 +37,7 @@ namespace SocialMediaApp.Infrastructure.Services
                 FirstName = addUserDTO.FirstName,
                 LastName = addUserDTO.LastName,
                 Username = addUserDTO.Username,
-                Password = addUserDTO.Password,
+                Password = _utilities.HashPassword( addUserDTO.Password)
             });
 
             if(rowAffected > 0)
@@ -55,8 +57,8 @@ namespace SocialMediaApp.Infrastructure.Services
                 return (BaseResponse<LoginResponse>.Failure("Wrong username or password"), 400);
             }
 
-            // Hashing of password was not added intentionally because the user feature was just for easy testing
-            var isPasswordCorrect = user.Password.Equals(loginDTO.Password,StringComparison.OrdinalIgnoreCase);
+
+            var isPasswordCorrect = _utilities.VerifyPassword(loginDTO.Password, user.Password);
 
             if(isPasswordCorrect)
             {

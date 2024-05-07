@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialMediaApp.Application.DTOs;
 using SocialMediaApp.Application.Interfaces.Services;
-using SocialMediaApp.Infrastructure.Services;
 
 namespace SocialMediaApp.API.Controllers
 {
