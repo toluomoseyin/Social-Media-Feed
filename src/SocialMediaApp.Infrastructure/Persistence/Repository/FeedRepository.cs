@@ -15,35 +15,34 @@ namespace SocialMediaApp.Infrastructure.Persistence.Repository
         }
         public async Task<List<FeedResponse>> GetUserFeed(int userId, int pageNumber, int pageSize)
         {
-            var Feeds = await (
-                                  from post in _appDbContext.Posts
-                                  join user in _appDbContext.Users on post.UserId equals user.Id
-                                  join follower in _appDbContext.Follows on post.UserId equals follower.FolloweeUserId
-                                  where follower.FollowerUserId == userId || post.UserId == userId
-                                  select new
-                                  {
-                                      Post = post,
-                                      User = user,
-                                  }
-                              )
-                              .OrderByDescending(feed => _appDbContext.PostLikes.Count(pl => pl.PostId == feed.Post.Id))
-                              .Select(feed => new FeedResponse
-                              {
-                                  PostId = feed.Post.Id,
-                                  Content = feed.Post.Content,
-                                  UserId = feed.Post.UserId,
-                                  FirstName = feed.User.FirstName,
-                                  LastName = feed.User.LastName,
-                                  Username = feed.User.Username,
-                                  CreatedDate = feed.Post.CreatedAt,
-                                  UpdatedDate = feed.Post.UpdatedAt,
-                              })
-                              .Skip((pageNumber - 1) * pageSize)
-                              .Take(pageSize)
-                              .ToListAsync();
 
-            return Feeds;
+         var feedResponses = await (
+                from post in _appDbContext.Posts
+                join user in _appDbContext.Users on post.UserId equals user.Id
+                join follow in _appDbContext.Follows on post.UserId equals follow.FolloweeUserId into follows
+                from follow in follows.DefaultIfEmpty()
+                join postLike in _appDbContext.PostLikes on post.Id equals postLike.PostId into postLikes
+                where follow.FollowerUserId == userId || post.UserId == userId
+                select new FeedResponse
+                {
+                    PostId = post.Id,
+                    Content = post.Content,
+                    UserId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Username = user.Username,
+                    CreatedDate = post.CreatedAt,
+                    UpdatedDate = post.UpdatedAt
+                }
+            )
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .Distinct()
+            .ToListAsync();
 
+            return feedResponses;
         }
+
+        
     }
 }

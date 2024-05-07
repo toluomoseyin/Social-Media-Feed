@@ -30,6 +30,8 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(provider =>
     return ConnectionMultiplexer.Connect(connectionString);
 });
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddScoped<IFeedRepository, FeedRepository>();
 builder.Services.AddScoped<IFollowRepository, FollowRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
